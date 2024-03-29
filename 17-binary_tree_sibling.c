@@ -1,39 +1,31 @@
 #include "binary_trees.h"
 
 /**
- * height_st - Measures the height of the ST binary tree
- * @tree: Pointer to the root node of the tree to measure height
+ * binary_tree_sibling - Finds the sibling of a node
+ * @node: Pointer to the node to find the sibling
  *
- * Return: Height of the ST
+ * Return: Pointer to the sibling node, NULL otherwise
  */
-size_t height_st(const binary_tree_t *tree)
+binary_tree_t *binary_tree_sibling(binary_tree_t *node)
 {
-	size_t left, right;
+	binary_tree_t *left, *right;
 
-	if (!tree)
-		return (0);
-	left = height_st(tree->left);
-	right = height_st(tree->right);
+	if (!node)
+		return (NULL);
+	if (node->parent == NULL)
+		return (NULL);
+	left = node->parent->left;
+	right = node->parent->right;
 
-	return (1 + (left > right ? left : right));
-}
-
-/**
- * binary_tree_balance - Computes the balance factor of a binary tree
- * @tree: Pointer to the root node of the tree to measure height
- *
- * Return: Balance factor
- */
-int binary_tree_balance(const binary_tree_t *tree)
-{
-	int balance;
-	size_t left, right;
-
-	if (!tree)
-		return (0);
-
-	left = height_st(tree->left);
-	right = height_st(tree->right);
-	balance = (int) left - (int) right;
-	return (balance);
+	if (left == node)
+	{
+		if (right)
+			return (right);
+	}
+	else if (right == node)
+	{
+		if (left)
+			return (left);
+	}
+	return (NULL);
 }
